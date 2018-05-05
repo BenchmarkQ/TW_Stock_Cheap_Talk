@@ -28,7 +28,8 @@ class PTTData():
                 print(e)
                 continue
             content = article_soup.find('div',{'id':"main-content",'class':"bbs-screen bbs-content"})
-            main_content = content.find(text = True , recursive = False)
+            main_content = content.find_all(text = True , recursive = False)
+            main_content = ''.join(main_content)
             push_content = content.find_all('div',{'class',"push"})
             push_content = [push.text for push in push_content]
             result_dict = {
@@ -38,9 +39,8 @@ class PTTData():
                     'push_content':push_content,
                     }
             self.articles_list.append(result_dict) 
-    def GetPTTData(self,pages = 1000):
+    def GetPTTData(self,pages = 100):
         for page in range(pages):
-            time.sleep(1)
             self.Connect()
         return self.articles_list
 Data = PTTData()
