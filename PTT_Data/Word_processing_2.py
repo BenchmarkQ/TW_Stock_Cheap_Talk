@@ -6,9 +6,12 @@ from collections import Counter
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import pdb
+import os
+
+path = os.getcwd()
 jieba.set_dictionary('dict.txt.big')
 jieba.analyse.set_stop_words('stops.txt')
-with open('test.json','r') as f:
+with open('test.txt','r') as f:
     data = json.load(f)
 dicts = list()
 for d in data.values():
@@ -19,7 +22,7 @@ for d in data.values():
 countD = Counter(dicts)
 print(countD)
 #f = open('test.txt','r').read()
-font = r'/home/mm/下載/MM_project/PTT_analysis/wt001.ttf'
+font = path + '/wt001.ttf'
 wordclound = WordCloud(font_path=font,width =1000,height = 860,margin =2).generate(json.dumps(dicts,ensure_ascii = False))
 plt.imshow(wordclound) 
 plt.axis('off')
