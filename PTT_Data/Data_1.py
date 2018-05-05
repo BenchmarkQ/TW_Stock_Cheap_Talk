@@ -4,10 +4,11 @@ import logging
 import json
 import sqlite3
 import pdb
+import time
 class PTTData():
     def __init__(self):
         self.url = 'https://www.ptt.cc/bbs/Stock/index.html'
-        self.articles_dict = {}
+        self.articles_list = []
     def Connect(self):
         page = requests.get(self.url)
         soup = bs4(page.text,'lxml')
@@ -20,18 +21,29 @@ class PTTData():
             print(article.text,article['href'])
             article_page = requests.get('http://www.ptt.cc'+article['href'])
             article_soup = bs4(article_page.text,'lxml')
+            try:
+                time = article_soup.find_all('div',{'class':'article-metaline'})[2].text.replace('時間','')
+            except IndexError as e:
+                print(article['href'])
+                print(e)
+                continue
             content = article_soup.find('div',{'id':"main-content",'class':"bbs-screen bbs-content"})
             main_content = content.find(text = True , recursive = False)
             push_content = content.find_all('div',{'class',"push"})
             push_content = [push.text for push in push_content]
-            self.articles_dict.update({article.text:[main_content]+push_content}) 
-    def GetPTTData(self,pages=3):
+            result_dict = {
+                    'title':article.text,
+                    'time':time,
+                    'main_content':main_content,
+                    'push_content':push_content,
+                    }
+            self.articles_list.append(result_dict) 
+    def GetPTTData(self,pages = 1000):
         for page in range(pages):
+            time.sleep(1)
             self.Connect()
-        return self.articles_dict
+        return self.articles_list
 Data = PTTData()
 articles = Data.GetPTTData()
 with open('test.txt','w') as file:
-    #file.write(json.dumps(articles,ensure_ascii=False))
     json.dump(articles, file)
-pdb.set_trace()
