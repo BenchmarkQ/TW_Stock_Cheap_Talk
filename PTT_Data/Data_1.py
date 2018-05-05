@@ -32,5 +32,6 @@ class PTTData():
 Data = PTTData()
 articles = Data.GetPTTData()
 with open('test.txt','w') as file:
-    file.write(json.dumps(articles,ensure_ascii=False))
+    #file.write(json.dumps(articles,ensure_ascii=False))
+    json.dump(articles, file)
 pdb.set_trace()
