@@ -1,3 +1,5 @@
+# 爬PTT文章
+
 import requests
 from bs4 import BeautifulSoup as bs4
 import logging
@@ -43,7 +45,9 @@ class PTTData():
         for page in range(pages):
             self.Connect()
         return self.articles_list
-Data = PTTData()
-articles = Data.GetPTTData()
-with open('test.txt','w') as file:
-    json.dump(articles, file)
+
+if __name__ == '__main__':
+    Data = PTTData()
+    articles = Data.GetPTTData()
+    with open('test.txt','w') as file:
+        json.dump(articles, file)
