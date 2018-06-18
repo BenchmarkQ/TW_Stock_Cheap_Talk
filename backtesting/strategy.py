@@ -29,7 +29,6 @@ class NaiveStrategy(Strategy):
         use_data = self.use_data
         date_list = use_data.index 
         indicator = (use_data['close'] - use_data['open'])/(use_data['open'])
-        pdb.set_trace()
         indicator = indicator.shift(1).dropna()
         indicator = pd.DataFrame(indicator, columns = ['sign'])
         def trans_value(value):
@@ -40,7 +39,7 @@ class NaiveStrategy(Strategy):
             elif value < 0.012 and value > -0.012:
                 return 'Hold'
         indicator['value'] = indicator['sign'].apply(trans_value)
-        return indicator[['value']]
+        return (indicator[['value']], self.num)
         
 if __name__ == '__main__':
     strategy = NaiveStrategy('0050', 2000, 1)
