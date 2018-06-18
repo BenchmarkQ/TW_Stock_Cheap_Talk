@@ -1,3 +1,5 @@
+# 做文字雲
+
 import pandas as pd
 import json
 import jieba
@@ -8,10 +10,13 @@ import matplotlib.pyplot as plt
 import pdb
 import os
 
+# setting
 path = os.getcwd()
 jieba.set_dictionary('dict.txt.big')
 jieba.analyse.set_stop_words('stops.txt')
-with open('test.txt','r') as f:
+
+# jieba makes vocab
+with open('test.txt','r', encoding='utf-8') as f:
     data = json.load(f)
 dicts = list()
 for d in data.values():
@@ -21,7 +26,8 @@ for d in data.values():
     dicts += [s for s in list_tmp if s.split() and len(s)>1]
 countD = Counter(dicts)
 print(countD)
-#f = open('test.txt','r').read()
+
+# make wordcloud
 font = path + '/wt001.ttf'
 wordclound = WordCloud(font_path=font,width =1000,height = 860,margin =2).generate(json.dumps(dicts,ensure_ascii = False))
 plt.imshow(wordclound) 
