@@ -71,4 +71,5 @@ class Trading():
 if __name__ == '__main__':
     test_strategy = sty.NaiveStrategy('0050', 2000, 1)
     indicator = test_strategy.main()
-    Trading(indicator, 1000000, 0.05).main()
+    result = Trading(indicator, 1000000, 0.05).main()
+    pdb.set_trace()
