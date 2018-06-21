@@ -1,7 +1,7 @@
-import strategy as sty
+from . import strategy as sty
 import pandas as pd
-import dataloader as dl
-import summary as sm
+from .import dataloader as dl
+from .import summary as sm
 import pdb
 
 

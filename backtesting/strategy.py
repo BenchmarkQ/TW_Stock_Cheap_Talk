@@ -1,5 +1,5 @@
 import pandas as pd
-import dataloader as dl
+from . import dataloader as dl
 import pdb
 
 class Strategy():
